@@ -1,59 +1,59 @@
 syntax = "v1"
 
 info (
-    title: "电商秒杀网关"
-    desc: "负责管理员登录的接口"
-    author: "Jinliu Pan"
-    email: "panjinliu6@163.com"
+	title: "电商秒杀网关"
+	desc: "负责管理员登录的接口"
+	author: "Jinliu Pan"
+	email: "panjinliu6@163.com"
 )
 
 import "base.api"
 
 type UserInfo {
-    Email string `json:"email"`
-    Desc string `json:"desc"`
-    Status string `json:"status"`
-    CreateTime string `json:"create_time"`
+	Email      string `json:"email"`
+	Desc       string `json:"desc"`
+	Status     string `json:"status"`
+	CreateTime string `json:"create_time"`
 }
 
 type (
-    AdminLoginReq {
-        Username string `form:"username"`
-        Password string `form:"password"`
-    }
-    AdminLoginResp {
-        Base
-        AdminToken string `json:"admin_token"`
-        Username string `json:"username"`
-    }
+	AdminLoginReq {
+		Username string `form:"username"`
+		Password string `form:"password"`
+	}
+	AdminLoginResp {
+		Base
+		AdminToken string `json:"admin_token"`
+		Username   string `json:"username"`
+	}
 
-    AdminUsersGetReq {
-        Pagenum int `form:"pagenum"`
-        Pagesize int `form:"pagesize"`
-    }
-    AdminUsersGetResp {
-        Base
-        Pagenum int `json:"pagenum"`
-        Pagesize int `json:"pagesize"`
-        Total int `json:"total"`
-        Users []UserInfo `json:"users"`
-    }
+	AdminUsersGetReq {
+		Pagenum  int `form:"pagenum"`
+		Pagesize int `form:"pagesize"`
+	}
+	AdminUsersGetResp {
+		Base
+		Pagenum  int        `json:"pagenum"`
+		Pagesize int        `json:"pagesize"`
+		Total    int        `json:"total"`
+		Users    []UserInfo `json:"users"`
+	}
 )
 
 @server (
-    prefix: /v1/admin
-    group: admin
+	prefix: /v1/admin
+	group: admin
 )
 service blitzbuy-api {
-    @doc(
-        summary: "管理员登录"
-    )
-    @handler AdminLogin
-    post /login (AdminLoginReq) returns (AdminLoginResp)
+	@doc(
+		summary: "管理员登录"
+	)
+	@handler AdminLogin
+	post /login (AdminLoginReq) returns (AdminLoginResp)
 
-    @doc(
-        summary: "管理员获取用户列表"
-    )
-    @handler AdminGetUsers
-    get /user/list (AdminUsersGetReq) returns (AdminUsersGetResp)
+	@doc(
+		summary: "管理员获取用户列表"
+	)
+	@handler AdminGetUsers
+	get /user/list (AdminUsersGetReq) returns (AdminUsersGetResp)
 }

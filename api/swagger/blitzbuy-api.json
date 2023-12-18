@@ -1,0 +1,1473 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "电商秒杀网关",
+    "description": "负责处理用户请求、数据转换、分流",
+    "version": ""
+  },
+  "host": "127.0.0.1",
+  "basePath": "/v1",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/admin/login": {
+      "post": {
+        "summary": "管理员登录",
+        "operationId": "AdminLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AdminLoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AdminLoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/v1/admin/user/list": {
+      "get": {
+        "summary": "管理员获取用户列表",
+        "operationId": "AdminGetUsers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AdminUsersGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagenum",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/v1/event/front/info": {
+      "get": {
+        "summary": "前台获取活动信息",
+        "operationId": "FrontEventInfoGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/FrontEventInfoGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "invalid",
+            "format": "UNKNOWN"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      }
+    },
+    "/v1/event/front/list": {
+      "get": {
+        "summary": "前台获取活动列表",
+        "operationId": "FrontEventListGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/FrontEventListGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagenum",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      }
+    },
+    "/v1/event/info": {
+      "get": {
+        "summary": "获取单个活动信息",
+        "operationId": "EventInfoGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EventInfoGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "invalid",
+            "format": "UNKNOWN"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      },
+      "delete": {
+        "summary": "删除活动信息",
+        "operationId": "EventInfoDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EventInfoDeleteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EventInfoDeleteReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      },
+      "post": {
+        "summary": "添加活动信息",
+        "operationId": "EventInfoAdd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EventInfoAddResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EventInfoAddReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      },
+      "put": {
+        "summary": "添加活动信息",
+        "operationId": "EventInfoUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EventInfoUpdateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EventInfoUpdateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      }
+    },
+    "/v1/event/list": {
+      "get": {
+        "summary": "获取所有活动的详细信息供管理端查看",
+        "operationId": "EventListGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EventListGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagenum",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      }
+    },
+    "/v1/event/products": {
+      "get": {
+        "summary": "管理员编辑或添加商品时需要绑定商品，所以需要查询所有商品名称和id",
+        "operationId": "EventProductsGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/EventProductsResp"
+            }
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "event"
+        ]
+      }
+    },
+    "/v1/falshsale/front/ordering": {
+      "get": {
+        "summary": "用户下单请求",
+        "operationId": "FlashSaleOrderingGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/FlashSaleOrderingResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "invalid",
+            "format": "UNKNOWN"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "falshsale"
+        ]
+      }
+    },
+    "/v1/falshsale/front/result": {
+      "get": {
+        "summary": "获取抢购结果",
+        "operationId": "FlashSaleResultGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/FlashSaleResultResp"
+            }
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "falshsale"
+        ]
+      }
+    },
+    "/v1/product/info": {
+      "get": {
+        "summary": "获取商品信息",
+        "operationId": "ProductInfoGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ProductInfoGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "type": "invalid",
+            "format": "UNKNOWN"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "product"
+        ]
+      },
+      "delete": {
+        "summary": "删除商品信息",
+        "operationId": "ProductInfoDelete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ProductInfoDeleteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductInfoDeleteReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "product"
+        ]
+      },
+      "post": {
+        "summary": "增加商品",
+        "operationId": "ProductInfoAdd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ProductInfoAddResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductInfoAddReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "product"
+        ]
+      },
+      "put": {
+        "summary": "更新商品信息",
+        "operationId": "ProductInfoUpdate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ProductInfoUpdateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductInfoUpdateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "product"
+        ]
+      }
+    },
+    "/v1/product/list": {
+      "get": {
+        "summary": "获取商品列表",
+        "operationId": "ProductListGet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ProductListGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagenum",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "product"
+        ]
+      }
+    },
+    "/v1/user/email/send": {
+      "post": {
+        "summary": "用户发送邮件",
+        "operationId": "UserEmailSend",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserEmailSendResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserEmailSendReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "operationId": "UserLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserLoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserLoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/register": {
+      "post": {
+        "summary": "用户注册",
+        "operationId": "UserRegister",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserRegisterResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserRegisterReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AdminLoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "AdminLoginReq",
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "AdminLoginResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "admin_token": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "AdminLoginResp",
+      "required": [
+        "admin_token",
+        "username"
+      ]
+    },
+    "AdminUsersGetReq": {
+      "type": "object",
+      "properties": {
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "AdminUsersGetReq",
+      "required": [
+        "pagenum",
+        "pagesize"
+      ]
+    },
+    "AdminUsersGetResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserInfo"
+          }
+        }
+      },
+      "title": "AdminUsersGetResp",
+      "required": [
+        "pagenum",
+        "pagesize",
+        "total",
+        "users"
+      ]
+    },
+    "Base": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "msg": {
+          "type": "string"
+        }
+      },
+      "title": "Base",
+      "required": [
+        "code",
+        "msg"
+      ]
+    },
+    "EventInfoAddReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "start_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "end_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "product_id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "EventInfoAddReq",
+      "required": [
+        "name",
+        "price",
+        "num",
+        "start_time",
+        "end_time",
+        "product_id"
+      ]
+    },
+    "EventInfoAddResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "EventInfoAddResp"
+    },
+    "EventInfoDeleteReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "EventInfoDeleteReq",
+      "required": [
+        "id"
+      ]
+    },
+    "EventInfoDeleteResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "EventInfoDeleteResp"
+    },
+    "EventInfoGetReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "EventInfoGetReq",
+      "required": [
+        "id"
+      ]
+    },
+    "EventInfoGetResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "event": {
+          "$ref": "#/definitions/EventRespInfo"
+        },
+        "products_no": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventProductRespInfo"
+          }
+        }
+      },
+      "title": "EventInfoGetResp",
+      "required": [
+        "event",
+        "products_no"
+      ]
+    },
+    "EventInfoUpdateReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "start_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "end_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "product_id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "EventInfoUpdateReq",
+      "required": [
+        "id",
+        "name",
+        "price",
+        "num",
+        "start_time",
+        "end_time",
+        "product_id"
+      ]
+    },
+    "EventInfoUpdateResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "EventInfoUpdateResp"
+    },
+    "EventListGetReq": {
+      "type": "object",
+      "properties": {
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "EventListGetReq",
+      "required": [
+        "pagenum",
+        "pagesize"
+      ]
+    },
+    "EventListGetResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventRespInfo"
+          }
+        }
+      },
+      "title": "EventListGetResp",
+      "required": [
+        "pagenum",
+        "pagesize",
+        "total",
+        "events"
+      ]
+    },
+    "EventProductRespInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        },
+        "product_name": {
+          "type": "string"
+        }
+      },
+      "title": "EventProductRespInfo",
+      "required": [
+        "id",
+        "product_name"
+      ]
+    },
+    "EventProductsResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EventProductRespInfo"
+          }
+        }
+      },
+      "title": "EventProductsResp",
+      "required": [
+        "products"
+      ]
+    },
+    "EventRespInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        },
+        "name": {
+          "type": "string"
+        },
+        "product_name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "start_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "end_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "creat_time": {
+          "type": "string"
+        },
+        "product_id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "EventRespInfo",
+      "required": [
+        "id",
+        "name",
+        "product_name",
+        "price",
+        "num",
+        "start_time",
+        "end_time",
+        "creat_time",
+        "product_id"
+      ]
+    },
+    "FlashSaleOrderingReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "FlashSaleOrderingReq",
+      "required": [
+        "id"
+      ]
+    },
+    "FlashSaleOrderingResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "FlashSaleOrderingResp"
+    },
+    "FlashSaleResultResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "FlashSaleResultResp"
+    },
+    "FrontEventInfoGetReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "FrontEventInfoGetReq",
+      "required": [
+        "id"
+      ]
+    },
+    "FrontEventInfoGetResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "event": {
+          "$ref": "#/definitions/FrontEventRespInfo"
+        }
+      },
+      "title": "FrontEventInfoGetResp",
+      "required": [
+        "event"
+      ]
+    },
+    "FrontEventListGetReq": {
+      "type": "object",
+      "properties": {
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "FrontEventListGetReq",
+      "required": [
+        "pagenum",
+        "pagesize"
+      ]
+    },
+    "FrontEventListGetResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FrontEventRespInfo"
+          }
+        }
+      },
+      "title": "FrontEventListGetResp",
+      "required": [
+        "pagenum",
+        "pagesize",
+        "total",
+        "events"
+      ]
+    },
+    "FrontEventRespInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "event_price": {
+          "type": "number",
+          "format": "float"
+        },
+        "start_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "end_time": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "product_id": {
+          "type": "string"
+        },
+        "product_name": {
+          "type": "string"
+        },
+        "pic": {
+          "type": "string"
+        },
+        "product_price": {
+          "type": "number",
+          "format": "float"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        }
+      },
+      "title": "FrontEventRespInfo",
+      "required": [
+        "id",
+        "num",
+        "event_price",
+        "start_time",
+        "end_time",
+        "product_id",
+        "product_name",
+        "pic",
+        "product_price",
+        "desc",
+        "unit"
+      ]
+    },
+    "ProductInfoAddReq": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/ProductReqInfo"
+        }
+      },
+      "title": "ProductInfoAddReq"
+    },
+    "ProductInfoAddResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "ProductInfoAddResp"
+    },
+    "ProductInfoDeleteReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "ProductInfoDeleteReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ProductInfoDeleteResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "ProductInfoDeleteResp"
+    },
+    "ProductInfoGetReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        }
+      },
+      "title": "ProductInfoGetReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ProductInfoGetResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/ProductRespInfo"
+        }
+      },
+      "title": "ProductInfoGetResp"
+    },
+    "ProductInfoUpdateReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uint"
+        },
+        "": {
+          "$ref": "#/definitions/ProductReqInfo"
+        }
+      },
+      "title": "ProductInfoUpdateReq",
+      "required": [
+        "id"
+      ]
+    },
+    "ProductInfoUpdateResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "ProductInfoUpdateResp"
+    },
+    "ProductListGetReq": {
+      "type": "object",
+      "properties": {
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "ProductListGetReq",
+      "required": [
+        "pagenum",
+        "pagesize"
+      ]
+    },
+    "ProductListGetResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "pagenum": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pagesize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductRespInfo"
+          }
+        }
+      },
+      "title": "ProductListGetResp",
+      "required": [
+        "pagenum",
+        "pagesize",
+        "total",
+        "products"
+      ]
+    },
+    "ProductReqInfo": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "pic": {
+          "type": "string"
+        }
+      },
+      "title": "ProductReqInfo",
+      "required": [
+        "name",
+        "price",
+        "num",
+        "unit",
+        "desc",
+        "pic"
+      ]
+    },
+    "ProductRespInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "interger",
+          "format": "uint"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "num": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "pic": {
+          "type": "string"
+        },
+        "create_time": {
+          "type": "string"
+        }
+      },
+      "title": "ProductRespInfo",
+      "required": [
+        "id",
+        "name",
+        "price",
+        "num",
+        "unit",
+        "desc",
+        "pic",
+        "create_time"
+      ]
+    },
+    "UserEmailSendReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "UserEmailSendReq",
+      "required": [
+        "email"
+      ]
+    },
+    "UserEmailSendResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "UserEmailSendResp"
+    },
+    "UserInfo": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "create_time": {
+          "type": "string"
+        }
+      },
+      "title": "UserInfo",
+      "required": [
+        "email",
+        "desc",
+        "status",
+        "create_time"
+      ]
+    },
+    "UserLoginReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "UserLoginReq",
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "UserLoginResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        },
+        "token": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        }
+      },
+      "title": "UserLoginResp",
+      "required": [
+        "token",
+        "nickname"
+      ]
+    },
+    "UserRegisterReq": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "captche": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "repassword": {
+          "type": "string"
+        }
+      },
+      "title": "UserRegisterReq",
+      "required": [
+        "email",
+        "captche",
+        "password",
+        "repassword"
+      ]
+    },
+    "UserRegisterResp": {
+      "type": "object",
+      "properties": {
+        "": {
+          "$ref": "#/definitions/Base"
+        }
+      },
+      "title": "UserRegisterResp"
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

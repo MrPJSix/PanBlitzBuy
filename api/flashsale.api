@@ -1,41 +1,41 @@
 syntax = "v1"
 
 info (
-    title: "电商秒杀网关"
-    desc: "负责活动增删查改与订单服务的接口（管理员端）"
-    author: "Jinliu Pan"
-    email: "panjinliu6@163.com"
+	title: "电商秒杀网关"
+	desc: "负责活动增删查改与订单服务的接口（管理员端）"
+	author: "Jinliu Pan"
+	email: "panjinliu6@163.com"
 )
 
 import "base.api"
 
 type (
-    FlashSaleOrderingReq {
-        ID uint `form:"id"`
-    }
-    FlashSaleOrderingResp {
-        Base
-    }
+	FlashSaleOrderingReq {
+		ID uint `form:"id"`
+	}
+	FlashSaleOrderingResp {
+		Base
+	}
 
-    FlashSaleResultResp {
-        Base
-    }
+	FlashSaleResultResp {
+		Base
+	}
 )
 
 @server (
-    prefix: /v1/falshsale
-    group: falshsale
+	prefix: /v1/falshsale
+	group: falshsale
 )
 service blitzbuy-api {
-    @doc(
-        summary: "用户下单请求"
-    )
-    @handler FlashSaleOrderingGet
-    get /front/ordering (FlashSaleOrderingReq) returns (FlashSaleOrderingResp)
+	@doc(
+		summary: "用户下单请求"
+	)
+	@handler FlashSaleOrderingGet
+	get /front/ordering (FlashSaleOrderingReq) returns (FlashSaleOrderingResp)
 
-    @doc(
-        summary: "获取抢购结果"
-    )
-    @handler FlashSaleResultGet
-    get /front/result returns (FlashSaleResultResp)
+	@doc(
+		summary: "获取抢购结果"
+	)
+	@handler FlashSaleResultGet
+	get /front/result returns (FlashSaleResultResp)
 }

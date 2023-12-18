@@ -1,0 +1,411 @@
+syntax = "v1"
+
+info(
+	title: "电商秒杀网关"
+	desc: "负责处理用户请求、数据转换、分流"
+	author: "Jinliu Pan"
+	email: "panjinliu6@163.com"
+)
+
+type Base {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type (
+	UserEmailSendReq {
+		Email string `form:"email"`
+	}
+	UserEmailSendResp {
+		Base
+	}
+	UserRegisterReq {
+		Email      string `form:"email"`
+		Captche    string `form:"captche"`
+		Password   string `form:"password"`
+		Repassword string `form:"repassword"`
+	}
+	UserRegisterResp {
+		Base
+	}
+	UserLoginReq {
+		Email    string `form:"email"`
+		Password string `form:"password"`
+	}
+	UserLoginResp {
+		Base
+		Token    string `json:"token"`
+		Nickname string `json:"nickname"`
+	}
+)
+
+@server (
+	prefix: /v1/user
+	group: user
+)
+service blitzbuy-api {
+	@doc(
+		summary: "用户发送邮件"
+	)
+	@handler UserEmailSend
+	post /email/send (UserEmailSendReq) returns (UserEmailSendResp)
+
+	@doc(
+		summary: "用户注册"
+	)
+	@handler UserRegister
+	post /register (UserRegisterReq) returns (UserRegisterResp)
+
+	@doc(
+		summary: "用户登录"
+	)
+	@handler UserLogin
+	post /login (UserLoginReq) returns (UserLoginResp)
+}
+
+type UserInfo {
+	Email      string `json:"email"`
+	Desc       string `json:"desc"`
+	Status     string `json:"status"`
+	CreateTime string `json:"create_time"`
+}
+
+type (
+	AdminLoginReq {
+		Username string `form:"username"`
+		Password string `form:"password"`
+	}
+	AdminLoginResp {
+		Base
+		AdminToken string `json:"admin_token"`
+		Username   string `json:"username"`
+	}
+
+	AdminUsersGetReq {
+		Pagenum  int `form:"pagenum"`
+		Pagesize int `form:"pagesize"`
+	}
+	AdminUsersGetResp {
+		Base
+		Pagenum  int        `json:"pagenum"`
+		Pagesize int        `json:"pagesize"`
+		Total    int        `json:"total"`
+		Users    []UserInfo `json:"users"`
+	}
+)
+
+@server (
+	prefix: /v1/admin
+	group: admin
+)
+service blitzbuy-api {
+	@doc(
+		summary: "管理员登录"
+	)
+	@handler AdminLogin
+	post /login (AdminLoginReq) returns (AdminLoginResp)
+
+	@doc(
+		summary: "管理员获取用户列表"
+	)
+	@handler AdminGetUsers
+	get /user/list (AdminUsersGetReq) returns (AdminUsersGetResp)
+}
+
+type ProductReqInfo {
+	Name  string  `form:"name"`
+	Price float32 `form:"price"`
+	Num   int     `form:"num"`
+	Unit  string  `form:"unit"`
+	Desc  string  `form:"desc"`
+	Pic   string  `form:"pic"`
+}
+
+type ProductRespInfo {
+	ID         uint    `json:"id"`
+	Name       string  `json:"name"`
+	Price      float32 `json:"price"`
+	Num        int     `json:"num"`
+	Unit       string  `json:"unit"`
+	Desc       string  `json:"desc"`
+	Pic        string  `json:"pic"`
+	CreateTime string  `json:"create_time"`
+}
+
+type (
+	ProductListGetReq {
+		Pagenum  int `form:"pagenum"`
+		Pagesize int `form:"pagesize"`
+	}
+	ProductListGetResp {
+		Base
+		Pagenum  int               `json:"pagenum"`
+		Pagesize int               `json:"pagesize"`
+		Total    int               `json:"total"`
+		Products []ProductRespInfo `json:"products"`
+	}
+
+	ProductInfoAddReq {
+		ProductReqInfo
+	}
+	ProductInfoAddResp {
+		Base
+	}
+
+	ProductInfoGetReq {
+		ID uint `form:"id"`
+	}
+	ProductInfoGetResp {
+		ProductRespInfo
+	}
+
+	ProductInfoUpdateReq {
+		ID uint `form:"id"`
+		ProductReqInfo
+	}
+	ProductInfoUpdateResp {
+		Base
+	}
+
+	ProductInfoDeleteReq {
+		ID uint `form:"id"`
+	}
+	ProductInfoDeleteResp {
+		Base
+	}
+)
+
+@server (
+	prefix: /v1/product
+	group: product
+)
+service blitzbuy-api {
+	@doc(
+		summary: "获取商品列表"
+	)
+	@handler ProductListGet
+	get /list (ProductListGetReq) returns (ProductListGetResp)
+
+	@doc(
+		summary: "增加商品"
+	)
+	@handler ProductInfoAdd
+	post /info (ProductInfoAddReq) returns (ProductInfoAddResp)
+
+	@doc(
+		summary: "获取商品信息"
+	)
+	@handler ProductInfoGet
+	get /info (ProductInfoGetReq) returns (ProductInfoGetResp)
+
+	@doc(
+		summary: "更新商品信息"
+	)
+	@handler ProductInfoUpdate
+	put /info (ProductInfoUpdateReq) returns (ProductInfoUpdateResp)
+
+	@doc(
+		summary: "删除商品信息"
+	)
+	@handler ProductInfoDelete
+	delete /info (ProductInfoDeleteReq) returns (ProductInfoDeleteResp)
+}
+
+type (
+	FlashSaleOrderingReq {
+		ID uint `form:"id"`
+	}
+	FlashSaleOrderingResp {
+		Base
+	}
+
+	FlashSaleResultResp {
+		Base
+	}
+)
+
+@server (
+	prefix: /v1/falshsale
+	group: falshsale
+)
+service blitzbuy-api {
+	@doc(
+		summary: "用户下单请求"
+	)
+	@handler FlashSaleOrderingGet
+	get /front/ordering (FlashSaleOrderingReq) returns (FlashSaleOrderingResp)
+
+	@doc(
+		summary: "获取抢购结果"
+	)
+	@handler FlashSaleResultGet
+	get /front/result returns (FlashSaleResultResp)
+}
+
+type EventProductRespInfo {
+	ID          uint   `json:"id"`
+	ProductName string `json:"product_name"`
+}
+
+type EventRespInfo {
+	ID          uint    `json:"id"`
+	Name        string  `json:"name"`
+	ProductName string  `json:"product_name"`
+	Price       float32 `json:"price"`
+	Num         int     `json:"num"`
+	StartTime   int64   `json:"start_time"`
+	EndTime     int64   `json:"end_time"`
+	CreatTime   string  `json:"creat_time"`
+	ProductID   uint    `json:"product_id"`
+}
+
+type FrontEventRespInfo {
+	ID         string  `json:"id"`
+	Num        int     `json:"num"`
+	EventPrice float32 `json:"event_price"`
+	StartTime  int64   `json:"start_time"`
+	EndTime    int64   `json:"end_time"`
+
+	ProductID    string  `json:"product_id"`
+	ProductName  string  `json:"product_name"`
+	Pic          string  `json:"pic"`
+	PorductPrice float32 `json:"product_price"`
+	Desc         string  `json:"desc"`
+	Unit         string  `json:"unit"`
+}
+
+type (
+	EventProductsResp {
+		Base
+		Products []EventProductRespInfo `json:"products"`
+	}
+
+	EventListGetReq {
+		Pagenum  int `form:"pagenum"`
+		Pagesize int `form:"pagesize"`
+	}
+	EventListGetResp {
+		Base
+		Pagenum  int             `json:"pagenum"`
+		Pagesize int             `json:"pagesize"`
+		Total    int             `json:"total"`
+		Events   []EventRespInfo `json:"events"`
+	}
+
+	EventInfoGetReq {
+		ID uint `form:"id"`
+	}
+	EventInfoGetResp {
+		Base
+		Event      EventRespInfo          `json:"event"`
+		ProductsNo []EventProductRespInfo `json:"products_no"`
+	}
+
+	EventInfoAddReq {
+		Name      string  `form:"name"`
+		Price     float32 `form:"price"`
+		Num       int     `form:"num"`
+		StartTime int64   `form:"start_time"`
+		EndTime   int64   `form:"end_time"`
+		ProductID uint    `form:"product_id"`
+	}
+	EventInfoAddResp {
+		Base
+	}
+
+	EventInfoUpdateReq {
+		ID        uint    `form:"id"`
+		Name      string  `form:"name"`
+		Price     float32 `form:"price"`
+		Num       int     `form:"num"`
+		StartTime int64   `form:"start_time"`
+		EndTime   int64   `form:"end_time"`
+		ProductID uint    `form:"product_id"`
+	}
+	EventInfoUpdateResp {
+		Base
+	}
+
+	EventInfoDeleteReq {
+		ID uint `form:"id"`
+	}
+	EventInfoDeleteResp {
+		Base
+	}
+
+	FrontEventListGetReq {
+		Pagenum  int `form:"pagenum"`
+		Pagesize int `form:"pagesize"`
+	}
+
+	FrontEventListGetResp {
+		Base
+		Pagenum  int                  `json:"pagenum"`
+		Pagesize int                  `json:"pagesize"`
+		Total    int                  `json:"total"`
+		Events   []FrontEventRespInfo `json:"events"`
+	}
+
+	FrontEventInfoGetReq {
+		ID uint `form:"id"`
+	}
+	FrontEventInfoGetResp {
+		Base
+		Event FrontEventRespInfo `json:"event"`
+	}
+)
+
+@server (
+	prefix: /v1/event
+	group: event
+)
+service blitzbuy-api {
+	@doc(
+		summary: "管理员编辑或添加商品时需要绑定商品，所以需要查询所有商品名称和id"
+	)
+	@handler EventProductsGet
+	get /products  returns (EventProductsResp)
+
+	@doc(
+		summary: "获取所有活动的详细信息供管理端查看"
+	)
+	@handler EventListGet
+	get /list (EventListGetReq) returns (EventListGetResp)
+
+	@doc(
+		summary: "获取单个活动信息"
+	)
+	@handler EventInfoGet
+	get /info (EventInfoGetReq) returns (EventInfoGetResp)
+
+	@doc(
+		summary: "添加活动信息"
+	)
+	@handler EventInfoAdd
+	post /info (EventInfoAddReq) returns (EventInfoAddResp)
+
+	@doc(
+		summary: "添加活动信息"
+	)
+	@handler EventInfoUpdate
+	put /info (EventInfoUpdateReq) returns (EventInfoUpdateResp)
+
+	@doc(
+		summary: "删除活动信息"
+	)
+	@handler EventInfoDelete
+	delete /info (EventInfoDeleteReq) returns (EventInfoDeleteResp)
+
+	@doc(
+		summary: "前台获取活动列表"
+	)
+	@handler FrontEventListGet
+	get /front/list (FrontEventListGetReq) returns (FrontEventListGetResp)
+
+	@doc(
+		summary: "前台获取活动信息"
+	)
+	@handler FrontEventInfoGet
+	get /front/info (FrontEventInfoGetReq) returns (FrontEventInfoGetResp)
+
+}

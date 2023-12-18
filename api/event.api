@@ -1,178 +1,178 @@
 syntax = "v1"
 
 info (
-    title: "电商秒杀网关"
-    desc: "活动管理"
-    author: "Jinliu Pan"
-    email: "panjinliu6@163.com"
+	title: "电商秒杀网关"
+	desc: "活动管理"
+	author: "Jinliu Pan"
+	email: "panjinliu6@163.com"
 )
 
 import "base.api"
 
 type EventProductRespInfo {
-    ID uint `json:"id"`
-    ProductName string `json:"product_name"`
+	ID          uint   `json:"id"`
+	ProductName string `json:"product_name"`
 }
 
 type EventRespInfo {
-    ID uint `json:"id"`
-    Name string `json:"name"`
-    ProductName string `json:"product_name"`
-    Price float32 `json:"price"`
-    Num int `json:"num"`
-    StartTime int64 `json:"start_time"`
-    EndTime int64 `json:"end_time"`
-    CreatTime string `json:"creat_time"`
-    ProductID uint  `json:"product_id"`
+	ID          uint    `json:"id"`
+	Name        string  `json:"name"`
+	ProductName string  `json:"product_name"`
+	Price       float32 `json:"price"`
+	Num         int     `json:"num"`
+	StartTime   int64   `json:"start_time"`
+	EndTime     int64   `json:"end_time"`
+	CreatTime   string  `json:"creat_time"`
+	ProductID   uint    `json:"product_id"`
 }
 
 type FrontEventRespInfo {
-    ID    string  `json:"id"`
-    Num    int     `json:"num"`
-    EventPrice float32 `json:"event_price"`
-    StartTime  int64  `json:"start_time"`
-    EndTime    int64  `json:"end_time"`
+	ID         string  `json:"id"`
+	Num        int     `json:"num"`
+	EventPrice float32 `json:"event_price"`
+	StartTime  int64   `json:"start_time"`
+	EndTime    int64   `json:"end_time"`
 
-    ProductID          string  `json:"product_id"`
-    ProductName        string  `json:"product_name"`
-    Pic                string  `json:"pic"`
-    PorductPrice       float32 `json:"product_price"`
-    Desc               string  `json:"desc"`
-    Unit               string  `json:"unit"`
+	ProductID    string  `json:"product_id"`
+	ProductName  string  `json:"product_name"`
+	Pic          string  `json:"pic"`
+	PorductPrice float32 `json:"product_price"`
+	Desc         string  `json:"desc"`
+	Unit         string  `json:"unit"`
 }
 
 type (
-    EventProductsResp {
-        Base
-        Products []EventProductRespInfo `json:"products""`
-    }
+	EventProductsResp {
+		Base
+		Products []EventProductRespInfo `json:"products"`
+	}
 
-    EventListGetReq {
-        Pagenum int `form:"pagenum"`
-        Pagesize int `form:"pagesize"`
-    }
-    EventListGetResp {
-        Base
-        Pagenum int `json:"pagenum"`
-        Pagesize int `json:"pagesize"`
-        Total int `json:"total"`
-        Events []EventRespInfo `json:"events"`
-    }
+	EventListGetReq {
+		Pagenum  int `form:"pagenum"`
+		Pagesize int `form:"pagesize"`
+	}
+	EventListGetResp {
+		Base
+		Pagenum  int             `json:"pagenum"`
+		Pagesize int             `json:"pagesize"`
+		Total    int             `json:"total"`
+		Events   []EventRespInfo `json:"events"`
+	}
 
-    EventInfoGetReq {
-        ID uint `form:"id"`
-    }
-    EventInfoGetResp {
-        Base
-        Event EventRespInfo `json:"event"`
-        ProductsNo []EventProductRespInfo `json:"products_no"`
-    }
+	EventInfoGetReq {
+		ID uint `form:"id"`
+	}
+	EventInfoGetResp {
+		Base
+		Event      EventRespInfo          `json:"event"`
+		ProductsNo []EventProductRespInfo `json:"products_no"`
+	}
 
-    EventInfoAddReq {
-        Name string `form:"name"`
-        Price float32 `form:"price"`
-        Num int `form:"num"`
-        StartTime int64 `form:"start_time"`
-        EndTime int64 `form:"end_time"`
-        ProductID uint  `form:"product_id"`
-    }
-    EventInfoAddResp {
-        Base
-    }
+	EventInfoAddReq {
+		Name      string  `form:"name"`
+		Price     float32 `form:"price"`
+		Num       int     `form:"num"`
+		StartTime int64   `form:"start_time"`
+		EndTime   int64   `form:"end_time"`
+		ProductID uint    `form:"product_id"`
+	}
+	EventInfoAddResp {
+		Base
+	}
 
-    EventInfoUpdateReq {
-        ID uint `form:id`
-        Name string `form:"name"`
-        Price float32 `form:"price"`
-        Num int `form:"num"`
-        StartTime int64 `form:"start_time"`
-        EndTime int64 `form:"end_time"`
-        ProductID uint  `form:"product_id"`
-    }
-    EventInfoUpdateResp {
-        Base
-    }
+	EventInfoUpdateReq {
+		ID        uint    `form:"id"`
+		Name      string  `form:"name"`
+		Price     float32 `form:"price"`
+		Num       int     `form:"num"`
+		StartTime int64   `form:"start_time"`
+		EndTime   int64   `form:"end_time"`
+		ProductID uint    `form:"product_id"`
+	}
+	EventInfoUpdateResp {
+		Base
+	}
 
-    EventInfoDeleteReq {
-        ID uint `form:"id"`
-    }
-    EventInfoDeleteResp {
-        Base
-    }
+	EventInfoDeleteReq {
+		ID uint `form:"id"`
+	}
+	EventInfoDeleteResp {
+		Base
+	}
 
-    FrontEventListGetReq {
-        Pagenum int `form:"pagenum"`
-        Pagesize int `form:"pagesize"`
-    }
+	FrontEventListGetReq {
+		Pagenum  int `form:"pagenum"`
+		Pagesize int `form:"pagesize"`
+	}
 
-    FrontEventListGetResp {
-        Base
-        Pagenum int `json:"pagenum"`
-        Pagesize int `json:"pagesize"`
-        Total int `json:"total"`
-        Events []FrontEventRespInfo `json:"events"`
-    }
+	FrontEventListGetResp {
+		Base
+		Pagenum  int                  `json:"pagenum"`
+		Pagesize int                  `json:"pagesize"`
+		Total    int                  `json:"total"`
+		Events   []FrontEventRespInfo `json:"events"`
+	}
 
-    FrontEventInfoGetReq {
-        ID uint `form:"id"`
-    }
-    FrontEventInfoGetResp {
-        Base
-        Event FrontEventRespInfo `json:"event"`
-    }
+	FrontEventInfoGetReq {
+		ID uint `form:"id"`
+	}
+	FrontEventInfoGetResp {
+		Base
+		Event FrontEventRespInfo `json:"event"`
+	}
 )
 
 @server (
-    prefix: /v1/event
-    group: event
+	prefix: /v1/event
+	group: event
 )
 service blitzbuy-api {
-    @doc(
-        summary: "管理员编辑或添加商品时需要绑定商品，所以需要查询所有商品名称和id"
-    )
-    @handler EventProductsGet
-    get /products  returns (EventProductsResp)
+	@doc(
+		summary: "管理员编辑或添加商品时需要绑定商品，所以需要查询所有商品名称和id"
+	)
+	@handler EventProductsGet
+	get /products  returns (EventProductsResp)
 
-    @doc(
-        summary: "获取所有活动的详细信息供管理端查看"
-    )
-    @handler EventListGet
-    get /list (EventListGetReq) returns (EventListGetResp)
+	@doc(
+		summary: "获取所有活动的详细信息供管理端查看"
+	)
+	@handler EventListGet
+	get /list (EventListGetReq) returns (EventListGetResp)
 
-    @doc(
-        summary: "获取单个活动信息"
-    )
-    @handler EventInfoGet
-    get /info (EventInfoGetReq) returns (EventInfoGetResp)
+	@doc(
+		summary: "获取单个活动信息"
+	)
+	@handler EventInfoGet
+	get /info (EventInfoGetReq) returns (EventInfoGetResp)
 
-    @doc(
-        summary: "添加活动信息"
-    )
-    @handler EventInfoAdd
-    post /info (EventInfoAddReq) returns (EventInfoAddResp)
+	@doc(
+		summary: "添加活动信息"
+	)
+	@handler EventInfoAdd
+	post /info (EventInfoAddReq) returns (EventInfoAddResp)
 
-    @doc(
-        summary: "添加活动信息"
-    )
-    @handler EventInfoUpdate
-    put /info (EventInfoUpdateReq) returns (EventInfoUpdateResp)
+	@doc(
+		summary: "添加活动信息"
+	)
+	@handler EventInfoUpdate
+	put /info (EventInfoUpdateReq) returns (EventInfoUpdateResp)
 
-    @doc(
-        summary: "删除活动信息"
-    )
-    @handler EventInfoDelete
-    delete /info (EventInfoDeleteReq) returns (EventInfoDeleteResp)
+	@doc(
+		summary: "删除活动信息"
+	)
+	@handler EventInfoDelete
+	delete /info (EventInfoDeleteReq) returns (EventInfoDeleteResp)
 
-    @doc(
-        summary: "前台获取活动列表"
-    )
-    @handler FrontEventListGet
-    get /front/list (FrontEventListGetReq) returns (FrontEventListGetResp)
+	@doc(
+		summary: "前台获取活动列表"
+	)
+	@handler FrontEventListGet
+	get /front/list (FrontEventListGetReq) returns (FrontEventListGetResp)
 
-    @doc(
-        summary: "前台获取活动信息"
-    )
-    @handler FrontEventInfoGet
-    get /front/info (FrontEventInfoGetReq) returns (FrontEventInfoGetResp)
+	@doc(
+		summary: "前台获取活动信息"
+	)
+	@handler FrontEventInfoGet
+	get /front/info (FrontEventInfoGetReq) returns (FrontEventInfoGetResp)
 
 }

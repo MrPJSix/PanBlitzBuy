@@ -12,4 +12,5 @@ import (
 	"admin.api"
 	"product.api"
 	"flashsale.api"
+	"event.api"
 )
