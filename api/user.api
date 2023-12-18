@@ -1,0 +1,61 @@
+syntax = "v1"
+
+info (
+    title: "电商秒杀网关"
+    desc: "负责用户注册与登陆的接口"
+    author: "Jinliu Pan"
+    email: "panjinliu6@163.com"
+)
+
+import "base.api"
+
+type (
+    UserEmailSendReq {
+        Email string `form:"email"`
+    }
+    UserEmailSendResp {
+        Base
+    }
+    UserRegisterReq {
+        Email string `form:"email"`
+        Captche string `form:"captche"`
+        Password string `form:"password"`
+        Repassword string `form:"repassword"`
+    }
+    UserRegisterResp {
+        Base
+    }
+    UserLoginReq {
+        Email string `form:"email"`
+        Password string `form:"password"`
+    }
+    UserLoginResp {
+        Base
+        Token string `json:"token"`
+        Nickname string `json:"nickname"`
+    }
+)
+
+@server (
+    prefix: /v1/user
+    group: user
+)
+service blitzbuy-api {
+    @doc(
+        summary: "用户发送邮件"
+    )
+    @handler UserEmailSend
+    post /email/send (UserEmailSendReq) returns (UserEmailSendResp)
+
+    @doc(
+        summary: "用户注册"
+    )
+    @handler UserRegister
+    post /register (UserRegisterReq) returns (UserRegisterResp)
+
+    @doc(
+        summary: "用户登录"
+    )
+    @handler UserLogin
+    post /login (UserLoginReq) returns (UserLoginResp)
+}

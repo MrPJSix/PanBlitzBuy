@@ -1,0 +1,11 @@
+syntax = "v1"
+
+info(
+    title: "电商秒杀网关"
+    desc: "基础公用api的返回信息"
+)
+
+type Base {
+    Code int `json:"code"`
+    Msg string `json:"msg"`
+}

@@ -1,0 +1,109 @@
+syntax = "v1"
+
+info (
+    title: "电商秒杀网关"
+    desc: "负责产品增删查改的接口（管理员端）"
+    author: "Jinliu Pan"
+    email: "panjinliu6@163.com"
+)
+
+import "base.api"
+
+type ProductReqInfo {
+    Name string `form:"name"`
+    Price float32 `form:"price"`
+    Num int `form:"num"`
+    Unit string `form:"unit"`
+    Desc string `form:"desc"`
+    Pic string `form:"pic"`
+}
+
+type ProductRespInfo {
+    ID uint `json:"id"`
+    Name string `json:"name"`
+    Price float32 `json:"price"`
+    Num int `json:"num"`
+    Unit string `json:"unit"`
+    Desc string `json:"desc"`
+    Pic string `json:"pic"`
+    CreateTime string `json:"create_time"`
+}
+
+type (
+    ProductListGetReq {
+        Pagenum int `form:"pagenum"`
+        Pagesize int `form:"pagesize"`
+    }
+    ProductListGetResp {
+        Base
+        Pagenum int `json:"pagenum"`
+        Pagesize int `json:"pagesize"`
+        Total int `json:"total"`
+        Products []ProductRespInfo `json:"products"`
+    }
+
+    ProductInfoAddReq {
+        ProductReqInfo
+    }
+    ProductInfoAddResp {
+        Base
+    }
+
+    ProductInfoGetReq {
+        ID uint `form:"id"`
+    }
+    ProductInfoGetResp {
+        ProductRespInfo
+    }
+
+    ProductInfoUpdateReq {
+        ID uint `form:"id"`
+        ProductReqInfo
+    }
+    ProductInfoUpdateResp {
+        Base
+    }
+
+    ProductInfoDeleteReq {
+        ID uint `form:"id"`
+    }
+    ProductInfoDeleteResp {
+        Base
+    }
+)
+
+@server (
+    prefix: /v1/product
+    group: product
+)
+service blitzbuy-api {
+    @doc(
+        summary: "获取商品列表"
+    )
+    @handler ProductListGet
+    get /list (ProductListGetReq) returns (ProductListGetResp)
+
+    @doc(
+        summary: "增加商品"
+    )
+    @handler ProductInfoAdd
+    post /info (ProductInfoAddReq) returns (ProductInfoAddResp)
+
+    @doc(
+        summary: "获取商品信息"
+    )
+    @handler ProductInfoGet
+    get /info (ProductInfoGetReq) returns (ProductInfoGetResp)
+
+    @doc(
+        summary: "更新商品信息"
+    )
+    @handler ProductInfoUpdate
+    put /info (ProductInfoUpdateReq) returns (ProductInfoUpdateResp)
+
+    @doc(
+        summary: "删除商品信息"
+    )
+    @handler ProductInfoDelete
+    delete /info (ProductInfoDeleteReq) returns (ProductInfoDeleteResp)
+}

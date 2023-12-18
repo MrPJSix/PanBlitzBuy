@@ -1,0 +1,15 @@
+syntax = "v1"
+
+info (
+	title: "电商秒杀网关"
+	desc: "负责处理用户请求、数据转换、分流"
+	author: "Jinliu Pan"
+	email: "panjinliu6@163.com"
+)
+
+import (
+	"user.api"
+	"admin.api"
+	"product.api"
+	"flashsale.api"
+)
