@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package flashsale;
+option go_package="./flashsale";
+
+message GeneralReq{
+  string id = 1;
+}
+
+message GeneralResp{
+  string code = 1;
+  string msg = 2;
+}
+
+message FlashsaleReq{
+  string id = 1;
+  string email = 2;
+}
+
+service FlashsaleService{
+  rpc FrontFlashsale(FlashsaleReq) returns (GeneralResp);
+}

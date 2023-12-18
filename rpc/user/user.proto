@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package user;
+option go_package="./user";
+
+message BasicUserInfo{
+  string email = 2;
+  string password = 3;
+}
+message UserInfo{
+  BasicUserInfo basicInfo = 1;
+  string username = 2;
+  string description = 3;
+  string status = 4;
+  string createTime = 5;
+}
+
+//只需要基本信息时的请求与通用回复
+message GeneralReq{
+  BasicUserInfo user = 1;
+}
+message GeneralResp{
+  string code = 1;
+  string msg = 2;
+}
+
+message RegisterUserReq{
+  UserInfo user = 1;
+  string code = 2;
+}
+
+message GetUserInfoReq{
+  int32 start = 1;
+  int32 amount = 2;
+}
+message GetUserInfoResp{
+  GeneralResp general = 1;
+  repeated UserInfo user = 2;
+  int32 total = 3;
+}
+
+service UserService{
+  rpc Register(RegisterUserReq) returns (GeneralResp);
+  rpc Login(GeneralReq) returns (GeneralResp);
+  rpc AdminLogin(GeneralReq) returns (GeneralResp);
+  rpc SendEmail(GeneralReq) returns (GeneralResp);
+  rpc GetUserInfo(GetUserInfoReq) returns (GetUserInfoResp);
+}

@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package productevent;
+option go_package="./productevent";
+
+// Product服务
+message ProductInfo{
+  string productId = 1;
+  string name = 2;
+  float price = 3;
+  int32 leftNum = 4;
+  string unit = 5;
+  string pic = 6;
+  string description = 7;
+  string createTime = 8;
+}
+
+message ProductGeneralReq{
+  string productId = 1;
+}
+message GeneralResp{
+  string code = 1;
+  string msg = 2;
+}
+
+message AddProductReq{
+  ProductInfo productInfo = 1;
+}
+
+message GetProductListReq{
+  int32 start = 1;
+  int32 amount = 2;
+}
+message GetProductListResp{
+  GeneralResp generalResp = 1;
+  int32 total = 2;
+  repeated ProductInfo productInfo = 3;
+}
+
+message GetProductResp{
+  GeneralResp generalResp = 1;
+  ProductInfo productInfo = 2;
+}
+
+message EditProductReq{
+  ProductInfo productInfo = 1;
+}
+
+service ProductService{
+  rpc AddProduct(AddProductReq) returns (GeneralResp);
+  rpc DeleteProduct(ProductGeneralReq) returns (GeneralResp);
+  rpc GetProductList(GetProductListReq) returns (GetProductListResp);
+  rpc GetProduct(ProductGeneralReq) returns (GetProductResp);
+  rpc GetSelectedProductList(ProductGeneralReq) returns (GetProductListResp);
+  rpc EditProduct(EditProductReq) returns (GeneralResp);
+}
+
+//Event服务
+message EventInfo{
+  string id = 1;
+  string name = 2;
+  float eventPrice = 3;
+  int32 eventNum = 4;
+  string startTime = 5;
+  string endTime = 6;
+  string description = 7;
+  string productId = 8;
+}
+message EventDetailedInfo{
+  EventInfo eventInfo = 1;
+  string eventCreateTime = 2;
+  string productName = 3;
+}
+
+message FrontEventInfo{
+  EventDetailedInfo eventDetailedInfo = 1;
+  ProductInfo productInfo = 2;
+}
+
+message EventGeneralReq{
+  string eventId = 1;
+}
+
+message AddEventReq{
+  EventInfo eventInfo = 1;
+}
+
+message GetEventListReq{
+  int32 start = 1;
+  int32 amount = 2;
+}
+message GetEventListResp{
+  GeneralResp generalResp = 1;
+  int32 total = 2;
+  repeated EventDetailedInfo eventList = 3;
+}
+
+message GetEventResp{
+  GeneralResp generalResp = 1;
+  EventDetailedInfo eventDetailedInfo = 2;
+}
+
+message EditEventReq{
+  EventInfo eventInfo = 1;
+}
+
+message GetFrontEventListReq{
+  int32 start = 1;
+  int32 amount = 2;
+}
+message GetFrontEventListResp{
+  GeneralResp generalResp = 1;
+  int32 total = 2;
+  repeated FrontEventInfo frontEventList = 3;
+}
+
+message GetFrontEventResp{
+  GeneralResp generalResp = 1;
+  FrontEventInfo frontEventInfo = 2;
+}
+
+service EventService{
+  rpc AddEvent(AddEventReq) returns (GeneralResp);
+  rpc GetEventList(GetEventListReq) returns (GetEventListResp);
+  rpc GetEvent(EventGeneralReq) returns (GetEventResp);
+  rpc EditEvent(EditEventReq) returns (GeneralResp);
+  rpc DeleteEvent(EventGeneralReq) returns (GeneralResp);
+  rpc GetFrontEventList(GetFrontEventListReq) returns (GetFrontEventListResp);
+  rpc GetFrontEvent(EventGeneralReq) returns (GetFrontEventResp);
+}
