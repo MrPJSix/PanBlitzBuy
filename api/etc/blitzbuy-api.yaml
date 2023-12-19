@@ -1,3 +1,9 @@
 Name: blitzbuy-api
 Host: 127.0.0.1
-Port: 8888
+Port: 9000
+
+User:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc

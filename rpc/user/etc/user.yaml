@@ -1,6 +1,19 @@
 Name: user.rpc
-ListenOn: 0.0.0.0:8080
+ListenOn: 127.0.0.1:9001
 Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: user.rpc
+Mysql:
+  Host: 127.0.0.1:3306
+  User: root
+  Password: PANJINLIU129058
+  Schema: pan-blitzbuy
+Email:
+  Host: smtp.qq.com
+  Port: 587
+  Username: 2310873779@qq.com
+  Password: jintvllnpcakebhf
+CodeCache:
+  ExpireTime: 300
+  CleanTime: 360
