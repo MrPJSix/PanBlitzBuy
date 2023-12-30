@@ -7,13 +7,13 @@ Etcd:
 Mysql:
   Host: 127.0.0.1:3306
   User: root
-  Password: PANJINLIU129058
+  Password: your-password
   Schema: pan-blitzbuy
 Email:
   Host: smtp.qq.com
   Port: 587
-  Username: 2310873779@qq.com
-  Password: jintvllnpcakebhf
+  Username: your-email
+  Password: your-apikey
 CodeCache:
   ExpireTime: 300
   CleanTime: 360
